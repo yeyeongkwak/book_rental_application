@@ -1,4 +1,4 @@
-package com.group.book_application.configuration
+package com.bnf.xc.prepayment.core.config
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

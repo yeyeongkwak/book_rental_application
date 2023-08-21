@@ -1,6 +1,7 @@
 package com.group.book_application.domain.model
 
 import com.group.book_application.domain.enums.BookHistoryStatusType
+import org.springframework.data.annotation.Id
 import java.time.LocalDateTime
 
 class BookHistory(

@@ -1,4 +1,5 @@
-package com.group.book_application.configuration
+package com.bnf.xc.prepayment.core.config
+
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.codec.ClientCodecConfigurer
@@ -17,4 +18,3 @@ class WebConfig {
             .exchangeStrategies(strategies)
     }
 }
-
