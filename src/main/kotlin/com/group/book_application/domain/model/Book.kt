@@ -4,26 +4,27 @@ import com.group.book_application.domain.enums.AvailableBookType
 import com.group.book_application.domain.enums.BookStatusType
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
+import java.time.LocalDate
 import java.time.LocalDateTime
 
-@Table(name = "book")
+@Table(name = "book_rental.book")
 data class Book(
     @Id
     val bookId:String,
 
-    val bookName:String,
+    var bookName:String,
 
-    val publishDate:LocalDateTime,
+    var publishDate:LocalDate,
 
-    val purchaseDate:LocalDateTime,
+    val purchaseDate:LocalDate,
 
     var availableDays:Int,
 
-    val author:String?,
+    var author:String?,
 
-    var status: BookStatusType,
+    var status: String,
 
-    var availableRank: AvailableBookType
+    var availableRank: String
 
 ) {
 }

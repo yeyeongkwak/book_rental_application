@@ -6,15 +6,16 @@ import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
 
-@Table
-data class User(
+@Table(name="book_rental.member_tb")
+data class Member(
     @Id
-    val userId:String,
-    val userName:String,
+    val memberId:String,
+    val memberName:String,
     val joinDate:LocalDateTime,
-    var modifyDate:LocalDateTime,
+    var modifyDate:LocalDateTime?=null,
     var rank: MemberRankTypes,
-    var blocked:Boolean
+    var blocked:Boolean=false,
+    var totalPoint:Int=0
 ) {
 
 }
