@@ -10,14 +10,14 @@ import reactor.core.publisher.Mono
 
 @Repository
 class R2dbcRentHistoryRepository(
-    val r2dbcTemplate:R2dbcEntityTemplate,
+    val r2dbcTemplate: R2dbcEntityTemplate,
     val springDataR2dbcRentHistory: SpringDataR2dbcRentHistory
-):RentHistoryRepository {
+) : RentHistoryRepository {
     override suspend fun createRentHistory(rentHistory: BookHistory) {
         r2dbcTemplate.insert(rentHistory).awaitSingle()
     }
 
     override suspend fun getBookRentHistoryById(historyId: String): Mono<BookHistory> {
-         return springDataR2dbcRentHistory.findByBookHistoryId(historyId)
+        return springDataR2dbcRentHistory.findByBookHistoryId(historyId)
     }
 }

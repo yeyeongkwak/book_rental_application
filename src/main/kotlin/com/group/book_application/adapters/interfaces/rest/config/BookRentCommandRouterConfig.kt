@@ -7,14 +7,14 @@ import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.coRouter
 
 @Configuration
-class BookRentCommandRouterConfig(private val bookRentCommandHandler:BookRentCommandHandler) {
+class BookRentCommandRouterConfig(private val bookRentCommandHandler: BookRentCommandHandler) {
     @Bean
-    fun bookRentRouter()=coRouter{
-        "/api/rent".nest{
-            accept(MediaType("application","vnd.xc.v1+json")).nest{
+    fun bookRentCommandRouter() = coRouter {
+        "/api/rent".nest {
+            accept(MediaType("application", "vnd.xc.v1+json")).nest {
                 POST("/user", bookRentCommandHandler::createUser)
-                POST("/book",bookRentCommandHandler::createBook)
+                POST("/book", bookRentCommandHandler::createBook)
             }
-    }
+        }
     }
 }

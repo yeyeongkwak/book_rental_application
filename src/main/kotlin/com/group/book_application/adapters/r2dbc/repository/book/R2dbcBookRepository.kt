@@ -1,15 +1,13 @@
 package com.group.book_application.adapters.r2dbc.repository.book
 
+import com.group.book_application.adapters.r2dbc.repository.SpringDataR2dbcBookRepository
 import com.group.book_application.domain.model.Book
 import com.group.book_application.domain.repository.BookRepository
-import com.group.book_application.adapters.r2dbc.repository.SpringDataR2dbcBookRepository
-import com.group.book_application.adapters.r2dbc.repository.SpringDataR2dbcUserRepository
-import com.group.book_application.application.usecase.BookQueryCondition
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
-import org.springframework.data.r2dbc.core.insert
 import org.springframework.stereotype.Repository
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Repository
@@ -30,7 +28,7 @@ class R2dbcBookRepository(
     }
 
     override suspend fun getAllBooks(): List<Book> {
-        return springDataR2dbcBookRepository.findAllBook()
+        return springDataR2dbcBookRepository.findAll().asFlow().toList()
     }
 
 //    override suspend fun getBooks(bookQueryCondition: BookQueryCondition): Flux<Book> {

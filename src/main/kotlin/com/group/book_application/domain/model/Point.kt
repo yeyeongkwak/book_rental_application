@@ -9,12 +9,10 @@ import java.time.LocalDateTime
 @Table
 data class Point(
     @Id
-    val pointId:String,
-    val memberId:String,
+    val pointId: String,
+    val memberId: String,
     var type: PointType,
     @CreatedDate
-    val changeDate:LocalDateTime,
-    var totalAmount:Int
-
-) {
-}
+    val changeDate: LocalDateTime,
+    var totalAmount: Int
+)

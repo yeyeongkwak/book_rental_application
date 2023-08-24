@@ -10,14 +10,14 @@ import reactor.core.publisher.Mono
 
 @Repository
 class R2dbcPointRepository(
-    val r2dbcTemplate:R2dbcEntityTemplate,
+    val r2dbcTemplate: R2dbcEntityTemplate,
     val springDataR2dbcPointRepository: SpringDataR2dbcPointRepository
-):PointRepository {
+) : PointRepository {
     override suspend fun createPointHistory(point: Point) {
         r2dbcTemplate.insert(point).awaitSingle()
     }
 
     override suspend fun getPointById(pointId: String): Mono<Point> {
-       return springDataR2dbcPointRepository.findByPointId(pointId)
+        return springDataR2dbcPointRepository.findByPointId(pointId)
     }
 }

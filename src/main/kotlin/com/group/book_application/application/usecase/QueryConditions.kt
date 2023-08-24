@@ -4,7 +4,7 @@ import org.springframework.data.domain.Pageable
 
 
 data class BookQueryCondition(
-    var pageable: Pageable?=null,
-    val bookName:String="",
-    val author:String=""
+    var pageable: Pageable? = null,
+    val bookName: String = "",
+    val author: String = ""
 )
