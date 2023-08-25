@@ -8,3 +8,8 @@ data class BookQueryCondition(
     val bookName: String = "",
     val author: String = ""
 )
+
+data class MemberQueryCondition(
+    var memberName:String="",
+    var pageable: Pageable?=null
+)

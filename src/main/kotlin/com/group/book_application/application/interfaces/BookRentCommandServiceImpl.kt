@@ -7,9 +7,9 @@ import com.group.book_application.domain.enums.BookStatusType
 import com.group.book_application.domain.model.Book
 import com.group.book_application.domain.model.Member
 import com.group.book_application.domain.repository.BookRepository
+import com.group.book_application.domain.repository.MemberRepository
 import com.group.book_application.domain.repository.PointRepository
 import com.group.book_application.domain.repository.RentHistoryRepository
-import com.group.book_application.domain.repository.UserRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -24,7 +24,7 @@ interface BookRentCommandService {
 @Service
 class BookRentCommandServiceImpl(
     private val identifierGenerator: R2dbcIdentifierGenerator,
-    private val userRepository: UserRepository,
+    private val userRepository: MemberRepository,
     private val bookRepository: BookRepository,
     private val rentHistoryRepository: RentHistoryRepository,
     private val pointRepository: PointRepository
@@ -65,8 +65,6 @@ class BookRentCommandServiceImpl(
         ).let {
             bookRepository.createBook(it)
         }
-//        }
-//    println(body)
         println("bookID" + bookId)
         return bookId
     }

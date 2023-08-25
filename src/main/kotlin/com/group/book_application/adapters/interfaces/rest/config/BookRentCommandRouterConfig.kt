@@ -12,7 +12,7 @@ class BookRentCommandRouterConfig(private val bookRentCommandHandler: BookRentCo
     fun bookRentCommandRouter() = coRouter {
         "/api/rent".nest {
             accept(MediaType("application", "vnd.xc.v1+json")).nest {
-                POST("/user", bookRentCommandHandler::createUser)
+                POST("/member", bookRentCommandHandler::createUser)
                 POST("/book", bookRentCommandHandler::createBook)
             }
         }

@@ -25,7 +25,7 @@ class R2dbcIdentifierGenerator(
         return "B"+withContext(Dispatchers.IO) {
             databaseClient.sql("select nextval('$bookSequenceId')")
                 .map { t, _ -> t.get("nextval", String::class.java)!! }
-                .one().asFlow().single()
+                .one().asFlow().single().toString().padStart(8,'0')
         }
     }
 
