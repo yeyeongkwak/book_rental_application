@@ -15,6 +15,7 @@ class BookRentQueryRouterConfig(private val bookRentQueryHandler: BookRentQueryH
                 /*Query*/
                 GET("/books", bookRentQueryHandler::searchBooks) //::=>리플랙션(참조)를 위해 사용
                 GET("/members", bookRentQueryHandler::searchMembers)
+                GET("/histories",bookRentQueryHandler::searchHistories)
             }
         }
     }

@@ -2,7 +2,9 @@ package com.group.book_application.adapters.interfaces.rest
 
 import com.group.book_application.adapters.interfaces.rest.dto.CreateBookRequest
 import com.group.book_application.adapters.interfaces.rest.dto.CreateMemberRequest
+import com.group.book_application.adapters.interfaces.rest.dto.CreateRentHistory
 import com.group.book_application.application.interfaces.BookRentCommandService
+import com.group.book_application.domain.model.RentHistory
 import com.group.book_application.utils.ResponseUtils
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
@@ -26,5 +28,19 @@ class BookRentCommandHandler(
                 "/api/rent/${bookRentCommandService.createBook(it)}"
             )
         }
+
+    suspend fun createRentHistory(req: ServerRequest):ServerResponse = req.awaitBody<CreateRentHistory>()
+        .let{
+            ResponseUtils.create(
+                "/api/rent/${bookRentCommandService.createRentHistory(it)}"
+            )
+        }
+
+//    suspend fun updateRent(req: ServerRequest):ServerResponse =req.awaitBody<RentHistory>()
+//        .let{
+//            ResponseUtils.ok(
+//                bookRentCommandService.updateRentHistory(it)
+//            )
+//        }
 
 }

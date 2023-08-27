@@ -17,12 +17,27 @@ data class Book(
 
     val purchaseDate: LocalDate,
 
-    val availableDays: Int,
+    val availableDays: Int = 14,
 
-    val author: String? = null,
+    var author: String? = null,
 
-    val status: BookStatusType,
+    var status: BookStatusType = BookStatusType.AVAILABLE,
 
-    val availableRank: AvailableBookType
+    var availableRank: AvailableBookType = AvailableBookType.ALL
 
-)
+) {
+    fun rentBooks(book:Book){
+        book.status=BookStatusType.RENT.apply {
+            println("book~~"+book.status)
+        }
+    }
+
+    fun returnBooks(){
+        status=BookStatusType.AVAILABLE
+    }
+
+    fun delayReturnBooks(){
+        status=BookStatusType.DELAYED
+    }
+
+}

@@ -14,8 +14,6 @@ data class CreateBookRequest(
     val availableDays: Int,
     @field:Schema(description = "작가")
     val author: String? = null,
-//    @field:Schema(description = "책 대여상태")
-//    var status:BookStatusType,
     @field:Schema(description = "대여 가능 등급")
     val availableRank: AvailableBookType = AvailableBookType.ALL
 )

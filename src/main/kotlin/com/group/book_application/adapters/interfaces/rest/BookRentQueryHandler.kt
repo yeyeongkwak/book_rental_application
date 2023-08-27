@@ -61,4 +61,10 @@ class BookRentQueryHandler(
             )
         )
     }
+
+    suspend fun searchHistories(req: ServerRequest):ServerResponse{
+        return ResponseUtils.ok(
+            bookRentQueryService.searchHistories()
+        )
+    }
 }
