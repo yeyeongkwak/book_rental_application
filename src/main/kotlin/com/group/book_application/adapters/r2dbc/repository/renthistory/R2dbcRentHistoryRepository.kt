@@ -1,10 +1,12 @@
 package com.group.book_application.adapters.r2dbc.repository.renthistory
 
+import com.group.book_application.adapters.interfaces.rest.dto.UpdateRent
 import com.group.book_application.adapters.r2dbc.repository.SpringDataR2dbcRentHistory
 import com.group.book_application.domain.model.RentHistory
 import com.group.book_application.domain.repository.RentHistoryRepository
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitLast
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
 import org.springframework.data.r2dbc.core.select
@@ -28,6 +30,11 @@ class R2dbcRentHistoryRepository(
         return springDataR2dbcRentHistory.findAll().asFlow().toList()
     }
 
-    override suspend fun updateRentHistoryById(historyId: String, rentHistory: RentHistory) {
+    override suspend fun getRentHistoriesByMemberId(memberId: String): List<RentHistory> {
+        return springDataR2dbcRentHistory.findAll().asFlow().toList().filter { r->r.memberId==memberId }
+    }
+
+    override suspend fun updateRentHistory(rentHistory: RentHistory) {
+        springDataR2dbcRentHistory.save(rentHistory).awaitSingle()
     }
 }

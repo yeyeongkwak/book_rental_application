@@ -5,7 +5,6 @@ import com.group.book_application.domain.model.Member
 import com.group.book_application.domain.model.Point
 import com.group.book_application.domain.model.RentHistory
 import org.springframework.data.domain.Pageable
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 interface BookRepository {
@@ -33,7 +32,9 @@ interface RentHistoryRepository {
     suspend fun getRentHistoryById(historyId: String): Mono<RentHistory>
 
     suspend fun getRentHistories(): List<RentHistory>
-    suspend fun updateRentHistoryById(historyId: String, rentHistory: RentHistory)
+
+    suspend fun getRentHistoriesByMemberId(memberId: String): List<RentHistory>
+    suspend fun updateRentHistory(rentHistory: RentHistory)
 }
 
 interface PointRepository {

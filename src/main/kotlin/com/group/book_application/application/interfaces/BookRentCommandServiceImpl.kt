@@ -3,6 +3,7 @@ package com.group.book_application.application.interfaces
 import com.group.book_application.adapters.interfaces.rest.dto.CreateBookRequest
 import com.group.book_application.adapters.interfaces.rest.dto.CreateMemberRequest
 import com.group.book_application.adapters.interfaces.rest.dto.CreateRentHistory
+import com.group.book_application.adapters.interfaces.rest.dto.UpdateRent
 import com.group.book_application.adapters.r2dbc.repository.R2dbcIdentifierGenerator
 import com.group.book_application.domain.enums.BookStatusType
 import com.group.book_application.domain.enums.PointType
@@ -17,6 +18,7 @@ import com.group.book_application.domain.repository.MemberRepository
 import com.group.book_application.domain.repository.PointRepository
 import com.group.book_application.domain.repository.RentHistoryRepository
 import jakarta.transaction.Transactional
+import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -29,7 +31,7 @@ interface BookRentCommandService {
     suspend fun createBook(body: CreateBookRequest): String
     suspend fun getBookByBookId(bookId: String): Book?
     suspend fun createRentHistory(body: CreateRentHistory): String
-//    suspend fun updateRentHistory(rentHistory: RentHistory):RentHistory
+    suspend fun updateRentHistory(body: List<UpdateRent>)
 
 }
 
@@ -71,8 +73,6 @@ class BookRentCommandServiceImpl(
         ).let {
             bookRepository.createBook(it)
         }
-
-        println("bookID" + bookId)
         return bookId
     }
 
@@ -141,9 +141,23 @@ class BookRentCommandServiceImpl(
         return rentHistoryId
     }
 
-//    override suspend fun updateRentHistory(rentHistory: RentHistory): RentHistory {
-//
-//    }
+    override suspend fun updateRentHistory(body: List<UpdateRent>) {
+        body.map { b ->
+            val existRentHistory = rentHistoryRepository.getRentHistoryById(b.rentHistoryId).awaitSingle()
+            existRentHistory.changeStatus(existRentHistory.leftDate)
+            rentHistoryRepository.updateRentHistory(existRentHistory)
+                .apply {
+                    val book = getBookByBookId(bookId = existRentHistory.bookId)
+                        ?: throw BookRentNotFoundIllegalException("${b.rentHistoryId} does not found")
+                    if (existRentHistory.leftDate >= 0) {
+                        book.returnBooks(book)
+                        bookRepository.updateBook(book)
+                    } else {
+                        book.delayReturnBooks(book)
+                    }
+                }
+        }
+    }
 
 }
 

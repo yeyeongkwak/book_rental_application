@@ -3,14 +3,11 @@ package com.group.book_application.adapters.r2dbc.repository.point
 import com.group.book_application.adapters.r2dbc.repository.SpringDataR2dbcPointRepository
 import com.group.book_application.domain.model.Point
 import com.group.book_application.domain.repository.PointRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
 import org.springframework.stereotype.Repository
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Repository
@@ -27,6 +24,6 @@ class R2dbcPointRepository(
     }
 
     override suspend fun searchPointByMemberId(memberId: String): List<Point> {
-        return springDataR2dbcPointRepository.findAll().asFlow().toList().filter{p->p.memberId==memberId}
+        return springDataR2dbcPointRepository.findAll().asFlow().toList().filter { p -> p.memberId == memberId }
     }
 }

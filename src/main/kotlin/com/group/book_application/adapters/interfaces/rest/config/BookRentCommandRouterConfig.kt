@@ -14,8 +14,8 @@ class BookRentCommandRouterConfig(private val bookRentCommandHandler: BookRentCo
             accept(MediaType("application", "vnd.xc.v1+json")).nest {
                 POST("/member", bookRentCommandHandler::createUser)
                 POST("/book", bookRentCommandHandler::createBook)
-                POST("/history",bookRentCommandHandler::createRentHistory)
-//                PUT("/history",bookRentCommandHandler::updateRent)
+                POST("/histories",bookRentCommandHandler::createRentHistory)
+                PUT("/histories",bookRentCommandHandler::updateRent)
             }
         }
     }

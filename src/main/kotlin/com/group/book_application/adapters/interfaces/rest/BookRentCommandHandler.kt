@@ -3,6 +3,7 @@ package com.group.book_application.adapters.interfaces.rest
 import com.group.book_application.adapters.interfaces.rest.dto.CreateBookRequest
 import com.group.book_application.adapters.interfaces.rest.dto.CreateMemberRequest
 import com.group.book_application.adapters.interfaces.rest.dto.CreateRentHistory
+import com.group.book_application.adapters.interfaces.rest.dto.UpdateRent
 import com.group.book_application.application.interfaces.BookRentCommandService
 import com.group.book_application.domain.model.RentHistory
 import com.group.book_application.utils.ResponseUtils
@@ -36,11 +37,11 @@ class BookRentCommandHandler(
             )
         }
 
-//    suspend fun updateRent(req: ServerRequest):ServerResponse =req.awaitBody<RentHistory>()
-//        .let{
-//            ResponseUtils.ok(
-//                bookRentCommandService.updateRentHistory(it)
-//            )
-//        }
+    suspend fun updateRent(req: ServerRequest):ServerResponse =req.awaitBody<List<UpdateRent>>()
+        .let{
+            ResponseUtils.ok(
+                bookRentCommandService.updateRentHistory(it)
+            )
+        }
 
 }

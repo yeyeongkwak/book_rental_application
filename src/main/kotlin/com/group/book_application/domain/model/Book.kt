@@ -27,17 +27,15 @@ data class Book(
 
 ) {
     fun rentBooks(book:Book){
-        book.status=BookStatusType.RENT.apply {
-            println("book~~"+book.status)
-        }
+        book.status=BookStatusType.RENT
     }
 
-    fun returnBooks(){
-        status=BookStatusType.AVAILABLE
+    fun returnBooks(book:Book){
+        book.status=BookStatusType.AVAILABLE
     }
 
-    fun delayReturnBooks(){
-        status=BookStatusType.DELAYED
+    fun delayReturnBooks(book:Book){
+        book.status=BookStatusType.DELAYED
     }
 
 }
