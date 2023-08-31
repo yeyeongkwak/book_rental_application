@@ -2,8 +2,8 @@ package com.group.book_application.dto.book
 
 import com.group.book_application.domain.enums.AvailableBookType
 import com.group.book_application.domain.enums.BookStatusType
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import java.time.LocalDateTime
 import java.util.*
 

@@ -62,16 +62,23 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "3.1.2"
-	id("io.spring.dependency-management") version "1.1.2"
-	kotlin("jvm") version "1.8.22"
-	kotlin("plugin.spring") version "1.8.22"
+//	id("org.springframework.boot") version "2.8.3"
+//	id("io.spring.dependency-management") version "1.1.2"
+//	kotlin("jvm") version "1.8.22"
+//	kotlin("plugin.spring") version "1.8.22"
+//	kotlin("kapt") version "1.7.20"
+
+	id("org.springframework.boot") version "2.7.5"
+	id("io.spring.dependency-management") version "1.0.15.RELEASE"
+	kotlin("jvm") version "1.7.20"
+	kotlin("plugin.spring") version "1.7.20"
+	kotlin("plugin.jpa") version "1.7.20"
 	kotlin("kapt") version "1.7.20"
 }
 
 group = "com.library"
 version = "0.0.1"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
@@ -147,7 +154,7 @@ dependencyManagement {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
+		jvmTarget = "11"
 	}
 }
 

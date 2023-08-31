@@ -19,8 +19,8 @@ data class Member(
     var maxRentCount: Int = 5,  //등급별 대여제한 수
     var currentRentCount: Int = 0  //현재 유저가 대여한 책의 개수
 ) {
-    fun updateMaxRentCount(member:Member) {
-        when (member.rank) {
+    fun updateMaxRentCount() {
+        when (rank) {
             MemberRankTypes.BRONZE -> maxRentCount = 5
             MemberRankTypes.SILVER -> maxRentCount = 10
             MemberRankTypes.GOLD -> maxRentCount = 15
@@ -28,28 +28,29 @@ data class Member(
         }
     }
 
-    fun updateRank(member:Member) {
+    fun updateRank() {
         when {
-            member.totalPoint in 2000..4999 -> rank = MemberRankTypes.SILVER
-            member.totalPoint in 5000..9999 -> rank = MemberRankTypes.GOLD
-            member.totalPoint >= 10000 -> rank = MemberRankTypes.VIP
+            totalPoint in 2000..4999 -> rank = MemberRankTypes.SILVER
+            totalPoint in 5000..9999 -> rank = MemberRankTypes.GOLD
+            totalPoint >= 10000 -> rank = MemberRankTypes.VIP
             else -> rank = MemberRankTypes.BRONZE
         }
     }
 
-    fun updateCurrentRentCount(member: Member,rentCount: Int) {
+    fun updateCurrentRentCount(rentCount: Int) {
         when {
             //빌리려는 책 합이 대여제한 수를 넘으면 에러 throw
-            member.maxRentCount < currentRentCount+rentCount -> throw Exception()
+            maxRentCount < currentRentCount+rentCount -> throw Exception("최대 대여수량인 ${maxRentCount}를 초과했습니다.")
             else -> {
                 currentRentCount += rentCount
             }
         }
     }
 
-    fun updateBlockStatus(member: Member){
+    fun updateBlockStatus(){
         when{
-            member.totalPoint<=-1000->blocked=true
+           totalPoint<=-1000->blocked=true
+            else->blocked=false
         }
     }
 

@@ -5,7 +5,6 @@ import com.group.book_application.adapters.interfaces.rest.dto.CreateMemberReque
 import com.group.book_application.adapters.interfaces.rest.dto.CreateRentHistory
 import com.group.book_application.adapters.interfaces.rest.dto.UpdateRent
 import com.group.book_application.application.interfaces.BookRentCommandService
-import com.group.book_application.domain.model.RentHistory
 import com.group.book_application.utils.ResponseUtils
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
@@ -30,15 +29,22 @@ class BookRentCommandHandler(
             )
         }
 
-    suspend fun createRentHistory(req: ServerRequest):ServerResponse = req.awaitBody<CreateRentHistory>()
-        .let{
+//    suspend fun createRentHistory(req: ServerRequest): ServerResponse = req.awaitBody<List<CreateRentHistory>>()
+//        .let {
+//            ResponseUtils.create(
+//                "/api/rent/${bookRentCommandService.createRentHistory(it)}"
+//            )
+//        }
+
+    suspend fun createRentHistories(req: ServerRequest): ServerResponse = req.awaitBody<List<CreateRentHistory>>()
+        .let {
             ResponseUtils.create(
-                "/api/rent/${bookRentCommandService.createRentHistory(it)}"
+                "/api/rent/${bookRentCommandService.createRentHistories(req.pathVariable("memberId"), it)}"
             )
         }
 
-    suspend fun updateRent(req: ServerRequest):ServerResponse =req.awaitBody<List<UpdateRent>>()
-        .let{
+    suspend fun updateRent(req: ServerRequest): ServerResponse = req.awaitBody<List<UpdateRent>>()
+        .let {
             ResponseUtils.ok(
                 bookRentCommandService.updateRentHistory(it)
             )

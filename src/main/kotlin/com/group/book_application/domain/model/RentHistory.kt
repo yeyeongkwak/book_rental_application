@@ -16,11 +16,13 @@ data class RentHistory(
     val bookId: String,
     val memberId: String,
 ) {
-    fun changeStatus(leftDate: Int) {
+    fun changeStatus(date: Int) {
         when {
-            leftDate >= 0 -> status = RentHistoryStatusType.RETURNED
-            else ->
-                status = RentHistoryStatusType.DELAYED
+            date < 0 -> {
+                status = RentHistoryStatusType.DELAYED;leftDate = 0
+            }
+            else -> status = RentHistoryStatusType.RETURNED
+
         }
     }
 

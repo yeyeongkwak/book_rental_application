@@ -20,6 +20,8 @@ interface SpringDataR2dbcMemberRepository : ReactiveCrudRepository<Member, Strin
 interface SpringDataR2dbcBookRepository : ReactiveCrudRepository<Book, String>{
     fun findByBookId(bookId: String): Mono<Book>
 
+    fun findByBookIdIsIn(bookNo: List<String>):Flux<Book>
+
 }
 
 interface SpringDataR2dbcPointRepository : ReactiveCrudRepository<Point, String> {

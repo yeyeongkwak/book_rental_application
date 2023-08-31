@@ -11,6 +11,7 @@ import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
 import org.springframework.data.relational.core.query.Criteria.where
 import org.springframework.data.relational.core.query.Query.query
 import org.springframework.stereotype.Repository
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Repository
@@ -26,12 +27,20 @@ class R2dbcBookRepository(
         springDataR2dbcBookRepository.save(book).awaitSingle()
     }
 
+    override suspend fun updateBooks(books: List<Book>) {
+        springDataR2dbcBookRepository.saveAll(books).asFlow().toList()
+    }
+
     override suspend fun getBookId(bookId: String): Mono<Book> {
         return springDataR2dbcBookRepository.findByBookId(bookId)
     }
 
     override suspend fun getAllBooks(): List<Book> {
         return springDataR2dbcBookRepository.findAll().asFlow().toList()
+    }
+
+    override suspend fun getByBookIds(bookIds: List<String>): Flux<Book> {
+        return springDataR2dbcBookRepository.findByBookIdIsIn(bookIds)
     }
 
     override suspend fun searchBooks(bookName: String, author: String, pageable: Pageable): List<Book> {

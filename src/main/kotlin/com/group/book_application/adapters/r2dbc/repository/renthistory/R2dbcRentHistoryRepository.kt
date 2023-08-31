@@ -7,6 +7,7 @@ import com.group.book_application.domain.repository.RentHistoryRepository
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitLast
+import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
 import org.springframework.data.r2dbc.core.select
@@ -20,6 +21,11 @@ class R2dbcRentHistoryRepository(
 ) : RentHistoryRepository {
     override suspend fun createRentHistory(rentHistory: RentHistory) {
         r2dbcTemplate.insert(rentHistory).awaitSingle()
+    }
+
+    override suspend fun createRentHistories(rentHistories: List<RentHistory>) {
+//        r2dbcTemplate.insert(rentHistories).awaitSingle()
+        springDataR2dbcRentHistory.saveAll(rentHistories).asFlow().toList()
     }
 
     override suspend fun getRentHistoryById(historyId: String): Mono<RentHistory> {
@@ -37,4 +43,10 @@ class R2dbcRentHistoryRepository(
     override suspend fun updateRentHistory(rentHistory: RentHistory) {
         springDataR2dbcRentHistory.save(rentHistory).awaitSingle()
     }
+
+    override suspend fun updateRentHistories(rentHistories: List<RentHistory>) {
+        springDataR2dbcRentHistory.saveAll(rentHistories).awaitSingle()
+    }
+
+
 }

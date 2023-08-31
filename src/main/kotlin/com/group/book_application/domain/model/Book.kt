@@ -26,16 +26,16 @@ data class Book(
     var availableRank: AvailableBookType = AvailableBookType.ALL
 
 ) {
-    fun rentBooks(book:Book){
-        book.status=BookStatusType.RENT
+    fun rent(){
+        status=BookStatusType.RENT
     }
 
-    fun returnBooks(book:Book){
-        book.status=BookStatusType.AVAILABLE
+    fun returnBooks(){
+        status=BookStatusType.AVAILABLE
     }
 
-    fun delayReturnBooks(book:Book){
-        book.status=BookStatusType.DELAYED
+    fun delayReturnBooks(){
+        status=BookStatusType.DELAYED
     }
 
 }

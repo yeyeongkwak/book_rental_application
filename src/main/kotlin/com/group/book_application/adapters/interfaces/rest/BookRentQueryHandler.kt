@@ -62,9 +62,21 @@ class BookRentQueryHandler(
         )
     }
 
-    suspend fun searchHistories(req: ServerRequest):ServerResponse{
-        return ResponseUtils.ok(
-            bookRentQueryService.searchHistories()
-        )
+
+    suspend fun searchHistories(req: ServerRequest): ServerResponse {
+        val memberId = req.queryParam("memberId").orElse("")
+        val page = req.queryParam("page").orElse("1").toInt()
+        val size = req.queryParam("size").orElse("10").toInt()
+        if (memberId.isNotEmpty()) {
+            return ResponseUtils.ok(
+                bookRentQueryService.searchHistoriesByMemberId(
+                    memberId = memberId,
+                    pageable = PageRequest.of(page - 1, size)
+                )
+            )
+        } else
+            return ResponseUtils.ok(
+                bookRentQueryService.searchHistories(pageable = PageRequest.of(page - 1, size))
+            )
     }
 }

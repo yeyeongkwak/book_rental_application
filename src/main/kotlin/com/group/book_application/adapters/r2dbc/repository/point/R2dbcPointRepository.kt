@@ -16,7 +16,12 @@ class R2dbcPointRepository(
     val springDataR2dbcPointRepository: SpringDataR2dbcPointRepository
 ) : PointRepository {
     override suspend fun createPointHistory(point: Point) {
-        r2dbcTemplate.insert(point).awaitSingle()
+        r2dbcTemplate.insert(point)
+    }
+
+    override suspend fun createPointHistories(points: List<Point>) {
+//        r2dbcTemplate.insert(points).awaitSingle()
+        springDataR2dbcPointRepository.saveAll(points)
     }
 
     override suspend fun getPointById(pointId: String): Mono<Point> {

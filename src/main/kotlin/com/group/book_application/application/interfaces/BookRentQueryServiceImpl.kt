@@ -7,11 +7,9 @@ import com.group.book_application.domain.repository.BookRepository
 import com.group.book_application.domain.repository.MemberRepository
 import com.group.book_application.domain.repository.PointRepository
 import com.group.book_application.domain.repository.RentHistoryRepository
-import kotlinx.coroutines.flow.Flow
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
 
 
 interface BookRentQueryService {
@@ -22,7 +20,9 @@ interface BookRentQueryService {
 
     suspend fun searchPointByMemberId(memberId: String): List<Point>
 
-    suspend fun searchHistories():List<RentHistory>
+    suspend fun searchHistories(pageable: Pageable): PageImpl<RentHistory>
+
+    suspend fun searchHistoriesByMemberId(memberId: String, pageable: Pageable): PageImpl<RentHistory>
 }
 
 @Service
@@ -54,7 +54,14 @@ class BookRentQueryServiceImpl(
         return pointRepository.searchPointByMemberId(memberId)
     }
 
-    override suspend fun searchHistories(): List<RentHistory> {
-        return rentHistoryRepository.getRentHistories()
+    override suspend fun searchHistories(pageable: Pageable): PageImpl<RentHistory> {
+        val rentHistories= rentHistoryRepository.getRentHistories()
+        return PageImpl(rentHistories, pageable, rentHistories.size.toLong())
+
+    }
+
+    override suspend fun searchHistoriesByMemberId(memberId: String, pageable: Pageable): PageImpl<RentHistory> {
+        val rentHistories = rentHistoryRepository.getRentHistoriesByMemberId(memberId)
+        return PageImpl(rentHistories, pageable, rentHistories.size.toLong())
     }
 }
