@@ -26,10 +26,9 @@ interface SpringDataR2dbcBookRepository : ReactiveCrudRepository<Book, String>{
 
 interface SpringDataR2dbcPointRepository : ReactiveCrudRepository<Point, String> {
     fun findByPointId(pointId: String): Mono<Point>
-
+    fun findAllByMemberId(memberId: String): Flux<Point>
 }
 
 interface SpringDataR2dbcRentHistory : ReactiveCrudRepository<RentHistory, String> {
     fun findByRentHistoryId(historyId: String): Mono<RentHistory>
-
 }

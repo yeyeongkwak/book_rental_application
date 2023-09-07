@@ -29,6 +29,6 @@ class R2dbcPointRepository(
     }
 
     override suspend fun searchPointByMemberId(memberId: String): List<Point> {
-        return springDataR2dbcPointRepository.findAll().asFlow().toList().filter { p -> p.memberId == memberId }
+        return springDataR2dbcPointRepository.findAllByMemberId(memberId).asFlow().toList() // 확인해볼것.
     }
 }

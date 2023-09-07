@@ -4,5 +4,5 @@ enum class MemberRankTypes{
     BRONZE,
     SILVER,
     GOLD,
-    VIP;
+    VIP
 }

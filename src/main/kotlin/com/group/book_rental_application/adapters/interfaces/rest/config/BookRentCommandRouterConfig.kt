@@ -15,8 +15,8 @@ class BookRentCommandRouterConfig(private val bookRentCommandHandler: BookRentCo
                 POST("/member", bookRentCommandHandler::createUser)
                 POST("/book", bookRentCommandHandler::createBook)
 //                POST("/histories",bookRentCommandHandler::createRentHistory)
-                POST("/histories/{memberId}", bookRentCommandHandler::createRentHistories)
-                PUT("/histories/{memberId}",bookRentCommandHandler::updateRent)
+                POST("/{memberId}/histories", bookRentCommandHandler::createRentHistories) // 순서
+                PUT("/{memberId}/histories",bookRentCommandHandler::updateRent) // 리소스 순서
             }
         }
     }

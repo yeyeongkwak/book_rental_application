@@ -38,17 +38,17 @@ class CalculateLeftDateExecutorImpl(
                 val rentHistories = rentHistoryRepository.getRentHistories()
                 //반납된 애들이 아닌 애들만
                 rentHistories.map { m ->
-                    val rentHistory = rentHistoryRepository.getRentHistoryById(m.rentHistoryId).awaitSingle()
+                    val rentHistory = rentHistoryRepository.getRentHistoryById(m.rentHistoryId).awaitSingle() // 수정
                     val newLeftDate = Period.between(LocalDate.now(), m.returnDate.toLocalDate()).days
-                    val updatedRentHistory = rentHistory.copy(leftDate = newLeftDate)
+                    val updatedRentHistory = rentHistory.copy(leftDate = newLeftDate) // copy는 쓰는 경우가 굉장히 한정적 copy?
                     val sameUser = memberRepository.getMemberByMemberId(rentHistory.memberId).awaitSingle()
 
                     //남은 일수에 따라 대여 이력 상태 변경하기
-                    updatedRentHistory.changeStatus(updatedRentHistory.leftDate);
+                    updatedRentHistory.changeStatus(updatedRentHistory.leftDate)
 
                     //반납완료 처리가 된 상태인 히스토리는 남은 일수를 0으로 초기화
                     if (m.status == RentHistoryStatusType.RETURNED) {
-                        rentHistoryRepository.updateRentHistory(rentHistory.copy(leftDate = 0))
+                        rentHistoryRepository.updateRentHistory(rentHistory.apply { leftDate = 0 })
 
                     } else if (updatedRentHistory.status == RentHistoryStatusType.DELAYED) {
                         rentHistoryRepository.updateRentHistory(updatedRentHistory)

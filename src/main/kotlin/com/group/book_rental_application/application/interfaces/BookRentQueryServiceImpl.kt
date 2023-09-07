@@ -55,7 +55,7 @@ class BookRentQueryServiceImpl(
     }
 
     override suspend fun searchHistories(pageable: Pageable): PageImpl<RentHistory> {
-        val rentHistories= rentHistoryRepository.getRentHistories()
+        val rentHistories = rentHistoryRepository.getRentHistories()
         return PageImpl(rentHistories, pageable, rentHistories.size.toLong())
 
     }

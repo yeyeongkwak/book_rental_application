@@ -17,12 +17,11 @@ data class RentHistory(
     val memberId: String,
 ) {
     fun changeStatus(date: Int) {
-        when {
-            date < 0 -> {
-                status = RentHistoryStatusType.DELAYED;leftDate = 0
+        status = when {
+            leftDate < 0 -> {
+                RentHistoryStatusType.DELAYED
             }
-            else -> status = RentHistoryStatusType.RETURNED
-
+            else -> RentHistoryStatusType.RENT // RENT? RETURN?
         }
     }
 
