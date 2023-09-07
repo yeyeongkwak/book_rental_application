@@ -5,10 +5,10 @@ spring:
     url: r2dbc:postgresql://localhost:5432/bookrental
     username: postgres
     password: 081725
-#  liquibase:
-#    change-log: classpath:db/changelog/db.changelog-master.yaml
-#    contexts: local
-#    enabled: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml.yaml
+    contexts: local
+    enabled: true
 
 server:
   servlet:
