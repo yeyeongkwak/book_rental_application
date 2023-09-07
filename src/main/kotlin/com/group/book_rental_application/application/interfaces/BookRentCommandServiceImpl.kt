@@ -51,15 +51,17 @@ class BookRentCommandServiceImpl(
     //유저 생성
     @Transactional
     override suspend fun createUser(body: CreateMemberRequest): String {
-        val newUser = memberRepository.getMemberByMemberId(body.memberId)
-        if (newUser == null) {
-            memberRepository.createUser(
+        val existMember = memberRepository.getMemberByMemberId(body.memberId).awaitSingle()
+        when {
+            body.memberId !== existMember.memberId -> memberRepository.createUser(
                 Member(
                     memberId = body.memberId,
                     memberName = body.memberName,
                 )
             )
+            else -> throw IllegalArgumentException("${body.memberId}는 존재하는 아이디입니다.")
         }
+
         return body.memberId
     }
 

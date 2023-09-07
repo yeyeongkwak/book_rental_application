@@ -18,12 +18,12 @@ class R2dbcMemberRepository(
     val r2dbcTemplate: R2dbcEntityTemplate,
     val springDataR2dbcMemberRepository: SpringDataR2dbcMemberRepository
 ) : MemberRepository {
-    override suspend fun createUser(user: Member) {
-        r2dbcTemplate.insert(user).awaitSingle()
+    override suspend fun createUser(member: Member) {
+        r2dbcTemplate.insert(member).awaitSingle()
     }
 
-    override suspend fun updateUser(user: Member) {
-        springDataR2dbcMemberRepository.save(user).awaitSingle()
+    override suspend fun updateUser(member: Member) {
+        springDataR2dbcMemberRepository.save(member).awaitSingle()
     }
 
     override suspend fun getMemberByMemberId(memberId: String): Mono<Member> {
