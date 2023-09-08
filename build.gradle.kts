@@ -8,6 +8,7 @@ plugins {
 	kotlin("plugin.spring") version "1.7.20"
 	kotlin("plugin.jpa") version "1.7.20"
 	kotlin("kapt") version "1.7.20"
+	id("nu.studer.jooq") version "7.1.1"
 }
 
 group = "com.library"
@@ -78,6 +79,9 @@ dependencies {
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+
+	jooqGenerator("org.postgresql:postgresql:42.3.8")
+	jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
 }
 dependencyManagement {
 	imports {
@@ -94,5 +98,56 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+jooq {
+	version.set("3.16.7")
+	edition.set(nu.studer.gradle.jooq.JooqEdition.OSS)
+	configurations {
+		create("main") {
+			jooqConfiguration.apply {
+				logging = org.jooq.meta.jaxb.Logging.WARN
+				jdbc.apply {
+					driver = "org.postgresql.Driver"
+					url = "jdbc:postgresql://localhost:5432/bookrental"
+					user = "postgres"
+					password = "081725"
+				}
+				generator.apply {
+					name = "org.jooq.codegen.KotlinGenerator"
+					database.apply {
+						name = "org.jooq.meta.postgres.PostgresDatabase"
+						inputSchema = "public"
+						includes = ".*"
+						excludes = """ databasechange.* """
+						forcedTypes.addAll(
+							arrayOf(
+								org.jooq.meta.jaxb.ForcedType()
+									.withName("varchar")
+									.withIncludeExpression(".*")
+									.withIncludeTypes("JSONB?"),
+								org.jooq.meta.jaxb.ForcedType()
+									.withName("varchar")
+									.withIncludeExpression(".*")
+									.withIncludeTypes("INET")
+							).toList()
+						)
+					}
+					generate.apply {
+						isJavaTimeTypes = true
+						isDeprecated = false
+						isRecords = false
+						isImmutablePojos = false
+						isFluentSetters = false
+					}
+					target.apply {
+						packageName = "com.group.book_rental_application.adapters.infrastructure.database.jooq.generated"
+						directory = "src/main/java"
+					}
+					strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+				}
+			}
+		}
+	}
 }
 
