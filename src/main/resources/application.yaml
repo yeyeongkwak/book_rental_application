@@ -4,7 +4,7 @@ spring:
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/bookrental
     username: postgres
-    password: 1234
+    password: 081725
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml.yaml
     contexts: local

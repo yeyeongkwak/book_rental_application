@@ -117,7 +117,7 @@ jooq {
 					name = "org.jooq.codegen.KotlinGenerator"
 					database.apply {
 						name = "org.jooq.meta.postgres.PostgresDatabase"
-						inputSchema = "public"
+						inputSchema = "book_rental"
 						includes = ".*"
 						excludes = """ databasechange.* """
 						forcedTypes.addAll(
