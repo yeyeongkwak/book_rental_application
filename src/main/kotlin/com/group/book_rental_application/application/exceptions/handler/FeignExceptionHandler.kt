@@ -1,6 +1,6 @@
-package com.bnf.xc.prepayment.core.application.exceptions.handler
+package com.group.book_rental_application.application.exceptions.handler
 
-import com.bnf.xc.prepayment.core.application.exceptions.ErrorResponse
+import com.group.book_rental_application.application.exceptions.ErrorResponse
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import feign.FeignException
 import org.springframework.stereotype.Component

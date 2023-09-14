@@ -1,6 +1,6 @@
-package com.bnf.xc.prepayment.core.application.exceptions.handler
+package com.group.book_rental_application.application.exceptions.handler
 
-import com.bnf.xc.prepayment.core.application.exceptions.ErrorResponse
+import com.group.book_rental_application.application.exceptions.ErrorResponse
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono

@@ -4,7 +4,7 @@
 package com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.enums
 
 
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.BookRental
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
 
 import org.jooq.Catalog
 import org.jooq.EnumType
@@ -21,7 +21,7 @@ enum class BookRankType(@get:JvmName("literal") public val literal: String) : En
     GOLD("GOLD"),
     VIP("VIP");
     override fun getCatalog(): Catalog? = schema.catalog
-    override fun getSchema(): Schema = BookRental.BOOK_RENTAL
+    override fun getSchema(): Schema = Public.PUBLIC
     override fun getName(): String = "book_rank_type"
     override fun getLiteral(): String = literal
 }

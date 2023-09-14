@@ -4,7 +4,7 @@
 package com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.tables
 
 
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.BookRental
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.BOOK_PK
 
 import java.time.LocalDate
@@ -36,7 +36,7 @@ open class Book(
     parameters: Array<Field<*>?>?
 ): TableImpl<Record>(
     alias,
-    BookRental.BOOK_RENTAL,
+    Public.PUBLIC,
     child,
     path,
     aliased,
@@ -47,7 +47,7 @@ open class Book(
     companion object {
 
         /**
-         * The reference instance of <code>book_rental.book</code>
+         * The reference instance of <code>public.book</code>
          */
         val BOOK: Book = Book()
     }
@@ -58,42 +58,42 @@ open class Book(
     override fun getRecordType(): Class<Record> = Record::class.java
 
     /**
-     * The column <code>book_rental.book.book_id</code>.
+     * The column <code>public.book.book_id</code>.
      */
     val BOOK_ID: TableField<Record, String?> = createField(DSL.name("book_id"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.book.book_name</code>.
+     * The column <code>public.book.book_name</code>.
      */
     val BOOK_NAME: TableField<Record, String?> = createField(DSL.name("book_name"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.book.publish_date</code>.
+     * The column <code>public.book.publish_date</code>.
      */
     val PUBLISH_DATE: TableField<Record, LocalDate?> = createField(DSL.name("publish_date"), SQLDataType.LOCALDATE.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.book.purchase_date</code>.
+     * The column <code>public.book.purchase_date</code>.
      */
     val PURCHASE_DATE: TableField<Record, LocalDate?> = createField(DSL.name("purchase_date"), SQLDataType.LOCALDATE.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.book.available_days</code>.
+     * The column <code>public.book.available_days</code>.
      */
     val AVAILABLE_DAYS: TableField<Record, Int?> = createField(DSL.name("available_days"), SQLDataType.INTEGER.defaultValue(DSL.field("14", SQLDataType.INTEGER)), this, "")
 
     /**
-     * The column <code>book_rental.book.author</code>.
+     * The column <code>public.book.author</code>.
      */
     val AUTHOR: TableField<Record, String?> = createField(DSL.name("author"), SQLDataType.VARCHAR, this, "")
 
     /**
-     * The column <code>book_rental.book.status</code>.
+     * The column <code>public.book.status</code>.
      */
     val STATUS: TableField<Record, String?> = createField(DSL.name("status"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.book.available_rank</code>.
+     * The column <code>public.book.available_rank</code>.
      */
     val AVAILABLE_RANK: TableField<Record, String?> = createField(DSL.name("available_rank"), SQLDataType.VARCHAR.nullable(false), this, "")
 
@@ -101,22 +101,22 @@ open class Book(
     private constructor(alias: Name, aliased: Table<Record>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
 
     /**
-     * Create an aliased <code>book_rental.book</code> table reference
+     * Create an aliased <code>public.book</code> table reference
      */
     constructor(alias: String): this(DSL.name(alias))
 
     /**
-     * Create an aliased <code>book_rental.book</code> table reference
+     * Create an aliased <code>public.book</code> table reference
      */
     constructor(alias: Name): this(alias, null)
 
     /**
-     * Create a <code>book_rental.book</code> table reference
+     * Create a <code>public.book</code> table reference
      */
     constructor(): this(DSL.name("book"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, Record>): this(Internal.createPathAlias(child, key), child, key, BOOK, null)
-    override fun getSchema(): Schema? = if (aliased()) null else BookRental.BOOK_RENTAL
+    override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<Record> = BOOK_PK
     override fun `as`(alias: String): Book = Book(DSL.name(alias), this)
     override fun `as`(alias: Name): Book = Book(alias, this)

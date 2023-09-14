@@ -32,3 +32,7 @@ interface SpringDataR2dbcPointRepository : ReactiveCrudRepository<Point, String>
 interface SpringDataR2dbcRentHistory : ReactiveCrudRepository<RentHistory, String> {
     fun findByRentHistoryId(historyId: String): Mono<RentHistory>
 }
+
+interface SpringDataR2dbcUserRentHistory: ReactiveCrudRepository<RentHistory, String>{
+    fun findByMemberId(memberId: String):Flux<RentHistory>
+}

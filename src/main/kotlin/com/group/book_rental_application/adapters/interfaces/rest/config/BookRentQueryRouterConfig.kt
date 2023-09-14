@@ -13,9 +13,9 @@ class BookRentQueryRouterConfig(private val bookRentQueryHandler: BookRentQueryH
         "/api/rent".nest {
             accept(MediaType("application", "vnd.xc.v1+json")).nest {
                 /*Query*/
-                GET("/books", bookRentQueryHandler::searchBooks) //::=>리플랙션(참조)를 위해 사용
+                GET("/books", bookRentQueryHandler::getBooks) //::=>리플랙션(참조)를 위해 사용
                 GET("/members", bookRentQueryHandler::searchMembers)
-                GET("/histories",bookRentQueryHandler::searchHistories)
+                GET("/histories",bookRentQueryHandler::getUserRentHistories)
             }
         }
     }

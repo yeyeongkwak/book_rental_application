@@ -1,4 +1,4 @@
-package com.bnf.xc.prepayment.core.application.exceptions
+package com.group.book_rental_application.application.exceptions
 
 import brave.Tracer
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,7 +19,7 @@ class GlobalErrorAttributes : DefaultErrorAttributes() {
     /**
      * default attribute에 code, traceId 추가
      */
-    private val defaultServerErrorCode = "S_PPM_0000"
+    private val defaultServerErrorCode = "S_BRR_0000"
 
     @Autowired
     lateinit var tracer: Tracer

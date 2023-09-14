@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDate
 
-@Table(name = "book_rental.book")
+@Table(name = "book")
 data class Book(
     @Id
     val bookId: String,

@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
-@Table(name = "book_rental.rent_history")
+@Table(name = "rent_history")
 data class RentHistory(
     @Id
     val rentHistoryId: String,
@@ -16,12 +16,13 @@ data class RentHistory(
     val bookId: String,
     val memberId: String,
 ) {
-    fun changeStatus(date: Int) {
+    fun changeStatus(days: Int) {
         status = when {
-            leftDate < 0 -> {
+            days < 0 -> {
                 RentHistoryStatusType.DELAYED
             }
-            else -> RentHistoryStatusType.RENT // RENT? RETURN?
+
+            else -> status // RENT? RETURN?
         }
     }
 

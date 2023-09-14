@@ -8,9 +8,7 @@ import com.group.book_rental_application.adapters.r2dbc.repository.R2dbcIdentifi
 import com.group.book_rental_application.domain.enums.AvailableBookType
 import com.group.book_rental_application.domain.enums.BookStatusType
 import com.group.book_rental_application.domain.enums.PointType
-import com.group.book_rental_application.domain.exceptions.BookRentIllegalArgumentException
-import com.group.book_rental_application.domain.exceptions.BookRentIllegalStateException
-import com.group.book_rental_application.domain.exceptions.BookRentNotFoundIllegalException
+import com.group.book_rental_application.domain.exceptions.*
 import com.group.book_rental_application.domain.model.Book
 import com.group.book_rental_application.domain.model.Member
 import com.group.book_rental_application.domain.model.Point
@@ -19,6 +17,8 @@ import com.group.book_rental_application.domain.repository.BookRepository
 import com.group.book_rental_application.domain.repository.MemberRepository
 import com.group.book_rental_application.domain.repository.PointRepository
 import com.group.book_rental_application.domain.repository.RentHistoryRepository
+import org.webjars.NotFoundException
+import io.undertow.util.BadRequestException
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.stereotype.Service
@@ -34,7 +34,6 @@ interface BookRentCommandService {
     suspend fun createBook(body: CreateBookRequest): String
     suspend fun getBookByBookId(bookId: String): Book?
     suspend fun createRentHistories(memberId: String, body: List<CreateRentHistory>)
-    suspend fun updateRentHistory(body: List<UpdateRent>)
     suspend fun updateRentHistories(memberId: String, body: List<UpdateRent>)
 
 }
@@ -102,20 +101,20 @@ class BookRentCommandServiceImpl(
 
     @Transactional
     override suspend fun createRentHistories(memberId: String, body: List<CreateRentHistory>) {
-        val member = getMemberById(memberId) ?: throw BookRentNotFoundIllegalException("$memberId does not found")
+        val member = getMemberById(memberId) ?: throw NotFoundException("$memberId does not found")
         when {
             //회원 자격이 정지됐다면 에러
             member.blocked -> throw BookRentIllegalArgumentException("${member.memberId} is blocked.")
-            //회원이 빌릴 수 있는 대여권수를 초과할때 에러 메시지
+            //회원이 빌릴 수 있는 대여권수를 초과할 때 에러 메시지
             member.maxRentCount < member.currentRentCount + body.size -> throw BookRentIllegalStateException("Available rent count is ${member.maxRentCount}. You tried to borrow ${member.currentRentCount + body.size} in total")
             else -> {
                 //대여가능한 케이스
                 body.map { rb ->
                     val book = getBookByBookId(bookId = rb.bookId)
-                            ?: throw BookRentNotFoundIllegalException("${rb.bookId} does not found")
+                            ?: throw NoSuchElementException("${rb.bookId} does not found")
                     when {
                         //이미 빌리려는 책이 대여상태이면..! 에러 메시지
-                        book.status == BookStatusType.RENT -> throw BookRentIllegalArgumentException("${book.bookName} is already rent")
+                        book.status == BookStatusType.RENT -> throw BadRequestException("${book.bookName} is already rent")
                         //회원이 빌릴 수 있는 책과 맞지 않는 경우 에러 메시지
                         book.availableRank != AvailableBookType.ALL && book.availableRank.toString() != member.rank.toString() -> throw BookRentIllegalArgumentException(
                                 "This book can be rent the rank from ${book.availableRank}"
@@ -126,7 +125,7 @@ class BookRentCommandServiceImpl(
                             val rentHistoryId = identifierGenerator.generateRentHistoryId()
                             rentHistoryRepository.createRentHistory(
                                     RentHistory(
-                                            rentHistoryId = rentHistoryId, memberId = member.memberId, bookId = book.bookId
+                                        rentHistoryId = rentHistoryId, memberId = member.memberId, bookId = book.bookId
                                     )
                             ).apply { //apply=>객체 생성과 동시에 초기화를 할 때 사용
                                 book.rent()
@@ -135,12 +134,12 @@ class BookRentCommandServiceImpl(
                                 //포인트 아이디 생성
                                 val pointId = identifierGenerator.generatePointId()
                                 pointRepository.createPointHistory(
-                                        Point(
-                                                pointId = pointId,
-                                                totalAmount = 200,
-                                                memberId = member.memberId,
-                                                type = PointType.GAIN
-                                        )
+                                    Point(
+                                        pointId = pointId,
+                                        totalAmount = 200,
+                                        memberId = member.memberId,
+                                        type = PointType.GAIN
+                                    )
                                 )
                             }
 
@@ -148,8 +147,7 @@ class BookRentCommandServiceImpl(
                     }
                 }.apply {
                     val totalPointSumByMember =
-                            pointRepository.searchPointByMemberId(member.memberId).sumOf { p -> p.totalAmount }
-                    println(totalPointSumByMember)
+                        pointRepository.searchPointByMemberId(member.memberId).sumOf { p -> p.totalAmount }
                     member.updatePoint(totalPointSumByMember)
                     memberRepository.updateUser(member)
                 }.apply {
@@ -162,38 +160,8 @@ class BookRentCommandServiceImpl(
         }
     }
 
-    override suspend fun updateRentHistory(body: List<UpdateRent>) {
-        body.map { b ->
-            val existRentHistory = rentHistoryRepository.getRentHistoryById(b.rentHistoryId).awaitSingle()
-            val pointId = identifierGenerator.generatePointId()
-
-            existRentHistory.changeStatus(existRentHistory.leftDate)
-            rentHistoryRepository.updateRentHistory(existRentHistory).apply {
-                val book = getBookByBookId(bookId = existRentHistory.bookId)
-                        ?: throw BookRentNotFoundIllegalException("${b.rentHistoryId} does not found")
-                if (existRentHistory.leftDate >= 0) {
-                    book.returnBooks()
-                    bookRepository.updateBook(book)
-                } else {
-                    book.delayReturnBooks().apply {
-                        pointRepository.createPointHistory(
-                                Point(
-                                        pointId = pointId,
-                                        totalAmount = 200,
-                                        memberId = existRentHistory.memberId,
-                                        type = PointType.GAIN
-                                )
-                        )
-                    }
-                    //포인트 차감~
-                    //회원 강등~
-                }
-            }
-        }
-    }
-
     override suspend fun updateRentHistories(memberId: String, body: List<UpdateRent>) {
-        val member = getMemberById(memberId) ?: throw BookRentNotFoundIllegalException("$memberId does not found")
+        val member = getMemberById(memberId) ?: throw NotFoundException("$memberId does not found")
         when (member) {
             else -> {
                 val updateRentHistories = ArrayList<RentHistory>(body.size)
@@ -203,7 +171,7 @@ class BookRentCommandServiceImpl(
                 body.map { b ->
                     val existRentHistory = rentHistoryRepository.getRentHistoryById(b.rentHistoryId).awaitSingle()
                     val book = getBookByBookId(bookId = existRentHistory.bookId)
-                            ?: throw BookRentNotFoundIllegalException("${b.rentHistoryId} does not found")
+                            ?: throw RentHistoryNotFoundIllegalException("${b.rentHistoryId} does not found")
                     val pointId = identifierGenerator.generatePointId()
 
                     existRentHistory.changeStatus(existRentHistory.leftDate)
@@ -217,10 +185,10 @@ class BookRentCommandServiceImpl(
                         else -> book.delayReturnBooks().apply {
                             newPoints.add(
                                     Point(
-                                            pointId = pointId,
-                                            totalAmount = -(300 * abs(existRentHistory.leftDate)),
-                                            memberId = existRentHistory.memberId,
-                                            type = PointType.SUB
+                                        pointId = pointId,
+                                        totalAmount = -(300 * abs(existRentHistory.leftDate)),
+                                        memberId = existRentHistory.memberId,
+                                        type = PointType.SUB
                                     )
                             )
                         }

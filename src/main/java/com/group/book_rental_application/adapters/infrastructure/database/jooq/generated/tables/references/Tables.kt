@@ -12,21 +12,21 @@ import com.group.book_rental_application.adapters.infrastructure.database.jooq.g
 
 
 /**
- * The table <code>book_rental.book</code>.
+ * The table <code>public.book</code>.
  */
 val BOOK: Book = Book.BOOK
 
 /**
- * The table <code>book_rental.member</code>.
+ * The table <code>public.member</code>.
  */
 val MEMBER: Member = Member.MEMBER
 
 /**
- * The table <code>book_rental.point</code>.
+ * The table <code>public.point</code>.
  */
 val POINT: Point = Point.POINT
 
 /**
- * The table <code>book_rental.rent_history</code>.
+ * The table <code>public.rent_history</code>.
  */
 val RENT_HISTORY: RentHistory = RentHistory.RENT_HISTORY

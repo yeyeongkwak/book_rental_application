@@ -6,7 +6,7 @@ import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
 
-@Table(name = "book_rental.member")
+@Table(name = "member")
 data class Member(
     @Id
     val memberId: String,   //멤버 이름

@@ -46,7 +46,7 @@ class BookRentCommandHandler(
     suspend fun updateRent(req: ServerRequest): ServerResponse = req.awaitBody<List<UpdateRent>>()
         .let {
             ResponseUtils.ok(
-                bookRentCommandService.updateRentHistory(it)
+                bookRentCommandService.updateRentHistories(req.pathVariable("memberId"),it)
             )
         }
 

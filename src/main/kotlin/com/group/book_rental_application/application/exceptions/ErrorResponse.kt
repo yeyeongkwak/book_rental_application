@@ -1,4 +1,4 @@
-package com.bnf.xc.prepayment.core.application.exceptions
+package com.group.book_rental_application.application.exceptions
 
 /**
  * X-Commerce 표준 에러 모델

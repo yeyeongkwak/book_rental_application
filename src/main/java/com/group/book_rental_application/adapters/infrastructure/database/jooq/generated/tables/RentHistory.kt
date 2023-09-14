@@ -4,7 +4,7 @@
 package com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.tables
 
 
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.BookRental
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.RENT_HISTORY__BOOK_HISTORY_USER_ID
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.RENT_HISTORY__RENT_HISTORY_BOOK_ID
 
@@ -39,7 +39,7 @@ open class RentHistory(
     parameters: Array<Field<*>?>?
 ): TableImpl<Record>(
     alias,
-    BookRental.BOOK_RENTAL,
+    Public.PUBLIC,
     child,
     path,
     aliased,
@@ -50,7 +50,7 @@ open class RentHistory(
     companion object {
 
         /**
-         * The reference instance of <code>book_rental.rent_history</code>
+         * The reference instance of <code>public.rent_history</code>
          */
         val RENT_HISTORY: RentHistory = RentHistory()
     }
@@ -61,37 +61,37 @@ open class RentHistory(
     override fun getRecordType(): Class<Record> = Record::class.java
 
     /**
-     * The column <code>book_rental.rent_history.rent_date</code>.
+     * The column <code>public.rent_history.rent_date</code>.
      */
     val RENT_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("rent_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.rent_history.return_date</code>.
+     * The column <code>public.rent_history.return_date</code>.
      */
     val RETURN_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("return_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.rent_history.left_date</code>.
+     * The column <code>public.rent_history.left_date</code>.
      */
     val LEFT_DATE: TableField<Record, Int?> = createField(DSL.name("left_date"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field("14", SQLDataType.INTEGER)), this, "")
 
     /**
-     * The column <code>book_rental.rent_history.status</code>.
+     * The column <code>public.rent_history.status</code>.
      */
     val STATUS: TableField<Record, String?> = createField(DSL.name("status"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.rent_history.book_id</code>.
+     * The column <code>public.rent_history.book_id</code>.
      */
     val BOOK_ID: TableField<Record, String?> = createField(DSL.name("book_id"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.rent_history.member_id</code>.
+     * The column <code>public.rent_history.member_id</code>.
      */
     val MEMBER_ID: TableField<Record, String?> = createField(DSL.name("member_id"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.rent_history.rent_history_id</code>.
+     * The column <code>public.rent_history.rent_history_id</code>.
      */
     val RENT_HISTORY_ID: TableField<Record, String?> = createField(DSL.name("rent_history_id"), SQLDataType.VARCHAR.nullable(false), this, "")
 
@@ -99,22 +99,22 @@ open class RentHistory(
     private constructor(alias: Name, aliased: Table<Record>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
 
     /**
-     * Create an aliased <code>book_rental.rent_history</code> table reference
+     * Create an aliased <code>public.rent_history</code> table reference
      */
     constructor(alias: String): this(DSL.name(alias))
 
     /**
-     * Create an aliased <code>book_rental.rent_history</code> table reference
+     * Create an aliased <code>public.rent_history</code> table reference
      */
     constructor(alias: Name): this(alias, null)
 
     /**
-     * Create a <code>book_rental.rent_history</code> table reference
+     * Create a <code>public.rent_history</code> table reference
      */
     constructor(): this(DSL.name("rent_history"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, Record>): this(Internal.createPathAlias(child, key), child, key, RENT_HISTORY, null)
-    override fun getSchema(): Schema? = if (aliased()) null else BookRental.BOOK_RENTAL
+    override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<Record> = com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.RENT_HISTORY_ID
     override fun getReferences(): List<ForeignKey<Record, *>> = listOf(RENT_HISTORY__RENT_HISTORY_BOOK_ID, RENT_HISTORY__BOOK_HISTORY_USER_ID)
 
@@ -122,7 +122,7 @@ open class RentHistory(
     private lateinit var _member: Member
 
     /**
-     * Get the implicit join path to the <code>book_rental.book</code> table.
+     * Get the implicit join path to the <code>public.book</code> table.
      */
     fun book(): Book {
         if (!this::_book.isInitialized)
@@ -132,7 +132,7 @@ open class RentHistory(
     }
 
     /**
-     * Get the implicit join path to the <code>book_rental.member</code> table.
+     * Get the implicit join path to the <code>public.member</code> table.
      */
     fun member(): Member {
         if (!this::_member.isInitialized)

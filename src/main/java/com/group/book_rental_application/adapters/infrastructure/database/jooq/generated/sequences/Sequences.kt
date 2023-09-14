@@ -4,7 +4,7 @@
 package com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.sequences
 
 
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.BookRental
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
 
 import org.jooq.Sequence
 import org.jooq.impl.Internal
@@ -13,16 +13,16 @@ import org.jooq.impl.SQLDataType
 
 
 /**
- * The sequence <code>book_rental.book_seq</code>
+ * The sequence <code>public.book_seq</code>
  */
-val BOOK_SEQ: Sequence<Long> = Internal.createSequence("book_seq", BookRental.BOOK_RENTAL, SQLDataType.BIGINT.nullable(false), null, null, null, null, false, null)
+val BOOK_SEQ: Sequence<Long> = Internal.createSequence("book_seq", Public.PUBLIC, SQLDataType.BIGINT.nullable(false), null, null, null, null, false, null)
 
 /**
- * The sequence <code>book_rental.point_seq</code>
+ * The sequence <code>public.point_seq</code>
  */
-val POINT_SEQ: Sequence<Long> = Internal.createSequence("point_seq", BookRental.BOOK_RENTAL, SQLDataType.BIGINT.nullable(false), null, null, null, null, false, null)
+val POINT_SEQ: Sequence<Long> = Internal.createSequence("point_seq", Public.PUBLIC, SQLDataType.BIGINT.nullable(false), null, null, null, null, false, null)
 
 /**
- * The sequence <code>book_rental.rent_history_seq</code>
+ * The sequence <code>public.rent_history_seq</code>
  */
-val RENT_HISTORY_SEQ: Sequence<Long> = Internal.createSequence("rent_history_seq", BookRental.BOOK_RENTAL, SQLDataType.BIGINT.nullable(false), null, null, null, null, false, null)
+val RENT_HISTORY_SEQ: Sequence<Long> = Internal.createSequence("rent_history_seq", Public.PUBLIC, SQLDataType.BIGINT.nullable(false), null, null, null, null, false, null)

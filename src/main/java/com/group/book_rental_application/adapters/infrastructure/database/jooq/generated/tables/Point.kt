@@ -4,7 +4,7 @@
 package com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.tables
 
 
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.BookRental
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.POINT_PK
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.POINT__POINT_USER_ID
 
@@ -39,7 +39,7 @@ open class Point(
     parameters: Array<Field<*>?>?
 ): TableImpl<Record>(
     alias,
-    BookRental.BOOK_RENTAL,
+    Public.PUBLIC,
     child,
     path,
     aliased,
@@ -50,7 +50,7 @@ open class Point(
     companion object {
 
         /**
-         * The reference instance of <code>book_rental.point</code>
+         * The reference instance of <code>public.point</code>
          */
         val POINT: Point = Point()
     }
@@ -61,27 +61,27 @@ open class Point(
     override fun getRecordType(): Class<Record> = Record::class.java
 
     /**
-     * The column <code>book_rental.point.point_id</code>.
+     * The column <code>public.point.point_id</code>.
      */
     val POINT_ID: TableField<Record, String?> = createField(DSL.name("point_id"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.point.member_id</code>.
+     * The column <code>public.point.member_id</code>.
      */
     val MEMBER_ID: TableField<Record, String?> = createField(DSL.name("member_id"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.point.type</code>.
+     * The column <code>public.point.type</code>.
      */
     val TYPE: TableField<Record, String?> = createField(DSL.name("type"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.point.change_date</code>.
+     * The column <code>public.point.change_date</code>.
      */
     val CHANGE_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("change_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "")
 
     /**
-     * The column <code>book_rental.point.total_amount</code>.
+     * The column <code>public.point.total_amount</code>.
      */
     val TOTAL_AMOUNT: TableField<Record, Int?> = createField(DSL.name("total_amount"), SQLDataType.INTEGER.nullable(false), this, "")
 
@@ -89,29 +89,29 @@ open class Point(
     private constructor(alias: Name, aliased: Table<Record>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
 
     /**
-     * Create an aliased <code>book_rental.point</code> table reference
+     * Create an aliased <code>public.point</code> table reference
      */
     constructor(alias: String): this(DSL.name(alias))
 
     /**
-     * Create an aliased <code>book_rental.point</code> table reference
+     * Create an aliased <code>public.point</code> table reference
      */
     constructor(alias: Name): this(alias, null)
 
     /**
-     * Create a <code>book_rental.point</code> table reference
+     * Create a <code>public.point</code> table reference
      */
     constructor(): this(DSL.name("point"), null)
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, Record>): this(Internal.createPathAlias(child, key), child, key, POINT, null)
-    override fun getSchema(): Schema? = if (aliased()) null else BookRental.BOOK_RENTAL
+    override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<Record> = POINT_PK
     override fun getReferences(): List<ForeignKey<Record, *>> = listOf(POINT__POINT_USER_ID)
 
     private lateinit var _member: Member
 
     /**
-     * Get the implicit join path to the <code>book_rental.member</code> table.
+     * Get the implicit join path to the <code>public.member</code> table.
      */
     fun member(): Member {
         if (!this::_member.isInitialized)

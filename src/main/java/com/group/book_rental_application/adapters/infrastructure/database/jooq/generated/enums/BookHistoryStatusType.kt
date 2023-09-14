@@ -4,7 +4,7 @@
 package com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.enums
 
 
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.BookRental
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
 
 import org.jooq.Catalog
 import org.jooq.EnumType
@@ -20,7 +20,7 @@ enum class BookHistoryStatusType(@get:JvmName("literal") public val literal: Str
     RETURNED("RETURNED"),
     DELAYED("DELAYED");
     override fun getCatalog(): Catalog? = schema.catalog
-    override fun getSchema(): Schema = BookRental.BOOK_RENTAL
+    override fun getSchema(): Schema = Public.PUBLIC
     override fun getName(): String = "book_history_status_type"
     override fun getLiteral(): String = literal
 }
