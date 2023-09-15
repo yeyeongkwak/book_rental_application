@@ -51,5 +51,4 @@ class R2dbcIdentifierGenerator(
                 .one().asFlow().single().toString().padStart(8, '0')
         }
     }
-
 }
