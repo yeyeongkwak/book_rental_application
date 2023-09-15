@@ -38,19 +38,13 @@ data class Member(
     }
 
     fun updateCurrentRentCount(rentCount: Int) {
-        when {
-            //빌리려는 책 합이 대여제한 수를 넘으면 에러 throw
-            maxRentCount < currentRentCount+rentCount -> throw Exception("최대 대여수량인 ${maxRentCount}를 초과했습니다.")
-            else -> {
-                currentRentCount += rentCount
-            }
-        }
+        currentRentCount += rentCount
     }
 
     fun updateBlockStatus(){
-        when{
-           totalPoint<=-1000->blocked=true
-            else->blocked=false
+        when {
+            totalPoint <= -1000 -> blocked = true
+            else -> blocked = false
         }
     }
 

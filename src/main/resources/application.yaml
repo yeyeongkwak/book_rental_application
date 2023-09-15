@@ -31,6 +31,6 @@ server:
 xc-config:
   database:
     sequence:
-      book: book_rental.book_seq
-      rent-history: book_rental.rent_history_seq
-      point: book_rental.point_seq
+      book: book_seq
+      rent-history: rent_history_seq
+      point: point_seq

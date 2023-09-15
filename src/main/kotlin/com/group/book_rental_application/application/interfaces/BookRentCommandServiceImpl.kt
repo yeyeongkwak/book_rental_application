@@ -101,14 +101,14 @@ class BookRentCommandServiceImpl(
 
     @Transactional
     override suspend fun createRentHistories(memberId: String, body: List<CreateRentHistory>) {
-        val member = getMemberById(memberId) ?: throw NotFoundException("$memberId does not found")
+        val member = getMemberById(memberId) ?: throw MemberNotFoundIllegalException("$memberId is not exist")
         when {
             //회원 자격이 정지됐다면 에러
             member.blocked -> throw BookRentIllegalArgumentException("${member.memberId} is blocked.")
             //회원이 빌릴 수 있는 대여권수를 초과할 때 에러 메시지
             member.maxRentCount < member.currentRentCount + body.size -> throw BookRentIllegalStateException("Available rent count is ${member.maxRentCount}. You tried to borrow ${member.currentRentCount + body.size} in total")
             else -> {
-                //대여가능한 케이스
+                //대여 가능한 케이스
                 body.map { rb ->
                     val book = getBookByBookId(bookId = rb.bookId)
                             ?: throw NoSuchElementException("${rb.bookId} does not found")

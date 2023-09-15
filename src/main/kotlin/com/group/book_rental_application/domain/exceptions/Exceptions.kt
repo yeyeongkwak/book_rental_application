@@ -16,6 +16,9 @@ open class BookNotFoundIllegalException(message: String) : IllegalArgumentExcept
 open class RentHistoryNotFoundIllegalException(message: String) : IllegalArgumentException(message)
 @ResponseStatus(value=HttpStatus.NOT_FOUND)
 open class MemberNotFoundIllegalException(message: String):IllegalArgumentException(message)
+
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+open class OverMaxRentCountIllegalException(message: String) : IllegalArgumentException(message)
 /**
  * 발송 정보를 찾을 수 없음
  */
