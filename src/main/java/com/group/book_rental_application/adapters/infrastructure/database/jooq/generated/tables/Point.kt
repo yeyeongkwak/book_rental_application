@@ -5,8 +5,7 @@ package com.group.book_rental_application.adapters.infrastructure.database.jooq.
 
 
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.POINT_PK
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.POINT__POINT_USER_ID
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.POINT__POINT_MEMBER_FK
 
 import java.time.LocalDateTime
 
@@ -20,7 +19,6 @@ import org.jooq.Schema
 import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.TableOptions
-import org.jooq.UniqueKey
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
 import org.jooq.impl.SQLDataType
@@ -76,14 +74,14 @@ open class Point(
     val TYPE: TableField<Record, String?> = createField(DSL.name("type"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     /**
-     * The column <code>public.point.change_date</code>.
+     * The column <code>public.point.changedate</code>.
      */
-    val CHANGE_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("change_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "")
+    val CHANGEDATE: TableField<Record, LocalDateTime?> = createField(DSL.name("changedate"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "")
 
     /**
-     * The column <code>public.point.total_amount</code>.
+     * The column <code>public.point.totalamount</code>.
      */
-    val TOTAL_AMOUNT: TableField<Record, Int?> = createField(DSL.name("total_amount"), SQLDataType.INTEGER.nullable(false), this, "")
+    val TOTALAMOUNT: TableField<Record, Int?> = createField(DSL.name("totalamount"), SQLDataType.INTEGER.nullable(false), this, "")
 
     private constructor(alias: Name, aliased: Table<Record>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<Record>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
@@ -105,8 +103,7 @@ open class Point(
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, Record>): this(Internal.createPathAlias(child, key), child, key, POINT, null)
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
-    override fun getPrimaryKey(): UniqueKey<Record> = POINT_PK
-    override fun getReferences(): List<ForeignKey<Record, *>> = listOf(POINT__POINT_USER_ID)
+    override fun getReferences(): List<ForeignKey<Record, *>> = listOf(POINT__POINT_MEMBER_FK)
 
     private lateinit var _member: Member
 
@@ -115,7 +112,7 @@ open class Point(
      */
     fun member(): Member {
         if (!this::_member.isInitialized)
-            _member = Member(this, POINT__POINT_USER_ID)
+            _member = Member(this, POINT__POINT_MEMBER_FK)
 
         return _member;
     }

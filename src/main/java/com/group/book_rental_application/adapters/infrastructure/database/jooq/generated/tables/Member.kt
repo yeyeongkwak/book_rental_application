@@ -5,12 +5,9 @@ package com.group.book_rental_application.adapters.infrastructure.database.jooq.
 
 
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.USER_ID
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.USER_PK
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.MEMBER_PK
 
 import java.time.LocalDateTime
-
-import kotlin.collections.List
 
 import org.jooq.Field
 import org.jooq.ForeignKey
@@ -61,11 +58,6 @@ open class Member(
     override fun getRecordType(): Class<Record> = Record::class.java
 
     /**
-     * The column <code>public.member.member_id</code>.
-     */
-    val MEMBER_ID: TableField<Record, String?> = createField(DSL.name("member_id"), SQLDataType.VARCHAR.nullable(false), this, "")
-
-    /**
      * The column <code>public.member.member_name</code>.
      */
     val MEMBER_NAME: TableField<Record, String?> = createField(DSL.name("member_name"), SQLDataType.VARCHAR.nullable(false), this, "")
@@ -73,7 +65,7 @@ open class Member(
     /**
      * The column <code>public.member.join_date</code>.
      */
-    val JOIN_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("join_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "")
+    val JOIN_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("join_date"), SQLDataType.LOCALDATETIME(6), this, "")
 
     /**
      * The column <code>public.member.modify_date</code>.
@@ -83,27 +75,27 @@ open class Member(
     /**
      * The column <code>public.member.rank</code>.
      */
-    val RANK: TableField<Record, String?> = createField(DSL.name("rank"), SQLDataType.VARCHAR.nullable(false).defaultValue(DSL.field("'BRONZE'::member_rank", SQLDataType.VARCHAR)), this, "")
+    val RANK: TableField<Record, String?> = createField(DSL.name("rank"), SQLDataType.VARCHAR, this, "")
 
     /**
      * The column <code>public.member.blocked</code>.
      */
-    val BLOCKED: TableField<Record, Boolean?> = createField(DSL.name("blocked"), SQLDataType.BOOLEAN.nullable(false), this, "")
+    val BLOCKED: TableField<Record, Boolean?> = createField(DSL.name("blocked"), SQLDataType.BOOLEAN, this, "")
 
     /**
      * The column <code>public.member.total_point</code>.
      */
-    val TOTAL_POINT: TableField<Record, Int?> = createField(DSL.name("total_point"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field("0", SQLDataType.INTEGER)), this, "")
+    val TOTAL_POINT: TableField<Record, Int?> = createField(DSL.name("total_point"), SQLDataType.INTEGER, this, "")
 
     /**
      * The column <code>public.member.max_rent_count</code>.
      */
-    val MAX_RENT_COUNT: TableField<Record, Int?> = createField(DSL.name("max_rent_count"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field("5", SQLDataType.INTEGER)), this, "")
+    val MAX_RENT_COUNT: TableField<Record, Int?> = createField(DSL.name("max_rent_count"), SQLDataType.INTEGER, this, "")
 
     /**
-     * The column <code>public.member.current_rent_count</code>.
+     * The column <code>public.member.member_id</code>.
      */
-    val CURRENT_RENT_COUNT: TableField<Record, Int?> = createField(DSL.name("current_rent_count"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field("0", SQLDataType.INTEGER)), this, "")
+    val MEMBER_ID: TableField<Record, String?> = createField(DSL.name("member_id"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     private constructor(alias: Name, aliased: Table<Record>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<Record>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
@@ -125,8 +117,7 @@ open class Member(
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, Record>): this(Internal.createPathAlias(child, key), child, key, MEMBER, null)
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
-    override fun getPrimaryKey(): UniqueKey<Record> = USER_PK
-    override fun getUniqueKeys(): List<UniqueKey<Record>> = listOf(USER_ID)
+    override fun getPrimaryKey(): UniqueKey<Record> = MEMBER_PK
     override fun `as`(alias: String): Member = Member(DSL.name(alias), this)
     override fun `as`(alias: Name): Member = Member(alias, this)
 

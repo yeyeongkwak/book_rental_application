@@ -4,9 +4,6 @@
 package com.group.book_rental_application.adapters.infrastructure.database.jooq.generated
 
 
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.sequences.BOOK_SEQ
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.sequences.POINT_SEQ
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.sequences.RENT_HISTORY_SEQ
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.tables.Book
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.tables.Member
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.tables.Point
@@ -15,7 +12,6 @@ import com.group.book_rental_application.adapters.infrastructure.database.jooq.g
 import kotlin.collections.List
 
 import org.jooq.Catalog
-import org.jooq.Sequence
 import org.jooq.Table
 import org.jooq.impl.SchemaImpl
 
@@ -54,12 +50,6 @@ open class Public : SchemaImpl("public", DefaultCatalog.DEFAULT_CATALOG) {
     val RENT_HISTORY: RentHistory get() = RentHistory.RENT_HISTORY
 
     override fun getCatalog(): Catalog = DefaultCatalog.DEFAULT_CATALOG
-
-    override fun getSequences(): List<Sequence<*>> = listOf(
-        BOOK_SEQ,
-        POINT_SEQ,
-        RENT_HISTORY_SEQ
-    )
 
     override fun getTables(): List<Table<*>> = listOf(
         Book.BOOK,

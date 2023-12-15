@@ -23,6 +23,7 @@ import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.transaction.Transactional
 import kotlin.math.abs
@@ -72,8 +73,8 @@ class BookRentCommandServiceImpl(
         Book(
                 bookId = bookId,
                 bookName = body.bookName,
-                publishDate = LocalDate.parse(body.publishDate, formatter),
-                purchaseDate = LocalDate.parse(body.purchaseDate, formatter),
+                publishDate = LocalDateTime.parse(body.publishDate, formatter),
+                purchaseDate = LocalDateTime.parse(body.purchaseDate, formatter),
                 author = body.author,
                 availableRank = body.availableRank
         ).let {

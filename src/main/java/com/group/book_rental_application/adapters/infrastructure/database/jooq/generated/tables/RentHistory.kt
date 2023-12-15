@@ -5,8 +5,9 @@ package com.group.book_rental_application.adapters.infrastructure.database.jooq.
 
 
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.RENT_HISTORY__BOOK_HISTORY_USER_ID
-import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.RENT_HISTORY__RENT_HISTORY_BOOK_ID
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.RENT_HISTORY_PK
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.RENT_HISTORY__RENT_HISTORY_BOOK_FK
+import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.RENT_HISTORY__RENT_HISTORY_MEMBER_FK
 
 import java.time.LocalDateTime
 
@@ -61,6 +62,11 @@ open class RentHistory(
     override fun getRecordType(): Class<Record> = Record::class.java
 
     /**
+     * The column <code>public.rent_history.rent_history_id</code>.
+     */
+    val RENT_HISTORY_ID: TableField<Record, String?> = createField(DSL.name("rent_history_id"), SQLDataType.VARCHAR.nullable(false), this, "")
+
+    /**
      * The column <code>public.rent_history.rent_date</code>.
      */
     val RENT_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("rent_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "")
@@ -71,14 +77,14 @@ open class RentHistory(
     val RETURN_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("return_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "")
 
     /**
-     * The column <code>public.rent_history.left_date</code>.
-     */
-    val LEFT_DATE: TableField<Record, Int?> = createField(DSL.name("left_date"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field("14", SQLDataType.INTEGER)), this, "")
-
-    /**
      * The column <code>public.rent_history.status</code>.
      */
     val STATUS: TableField<Record, String?> = createField(DSL.name("status"), SQLDataType.VARCHAR.nullable(false), this, "")
+
+    /**
+     * The column <code>public.rent_history.left_date</code>.
+     */
+    val LEFT_DATE: TableField<Record, Int?> = createField(DSL.name("left_date"), SQLDataType.INTEGER.nullable(false), this, "")
 
     /**
      * The column <code>public.rent_history.book_id</code>.
@@ -89,11 +95,6 @@ open class RentHistory(
      * The column <code>public.rent_history.member_id</code>.
      */
     val MEMBER_ID: TableField<Record, String?> = createField(DSL.name("member_id"), SQLDataType.VARCHAR.nullable(false), this, "")
-
-    /**
-     * The column <code>public.rent_history.rent_history_id</code>.
-     */
-    val RENT_HISTORY_ID: TableField<Record, String?> = createField(DSL.name("rent_history_id"), SQLDataType.VARCHAR.nullable(false), this, "")
 
     private constructor(alias: Name, aliased: Table<Record>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<Record>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
@@ -115,8 +116,8 @@ open class RentHistory(
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, Record>): this(Internal.createPathAlias(child, key), child, key, RENT_HISTORY, null)
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
-    override fun getPrimaryKey(): UniqueKey<Record> = com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.RENT_HISTORY_ID
-    override fun getReferences(): List<ForeignKey<Record, *>> = listOf(RENT_HISTORY__RENT_HISTORY_BOOK_ID, RENT_HISTORY__BOOK_HISTORY_USER_ID)
+    override fun getPrimaryKey(): UniqueKey<Record> = RENT_HISTORY_PK
+    override fun getReferences(): List<ForeignKey<Record, *>> = listOf(RENT_HISTORY__RENT_HISTORY_BOOK_FK, RENT_HISTORY__RENT_HISTORY_MEMBER_FK)
 
     private lateinit var _book: Book
     private lateinit var _member: Member
@@ -126,7 +127,7 @@ open class RentHistory(
      */
     fun book(): Book {
         if (!this::_book.isInitialized)
-            _book = Book(this, RENT_HISTORY__RENT_HISTORY_BOOK_ID)
+            _book = Book(this, RENT_HISTORY__RENT_HISTORY_BOOK_FK)
 
         return _book;
     }
@@ -136,7 +137,7 @@ open class RentHistory(
      */
     fun member(): Member {
         if (!this::_member.isInitialized)
-            _member = Member(this, RENT_HISTORY__BOOK_HISTORY_USER_ID)
+            _member = Member(this, RENT_HISTORY__RENT_HISTORY_MEMBER_FK)
 
         return _member;
     }

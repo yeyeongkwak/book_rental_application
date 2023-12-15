@@ -7,7 +7,7 @@ package com.group.book_rental_application.adapters.infrastructure.database.jooq.
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.Public
 import com.group.book_rental_application.adapters.infrastructure.database.jooq.generated.keys.BOOK_PK
 
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 import org.jooq.Field
 import org.jooq.ForeignKey
@@ -70,22 +70,12 @@ open class Book(
     /**
      * The column <code>public.book.publish_date</code>.
      */
-    val PUBLISH_DATE: TableField<Record, LocalDate?> = createField(DSL.name("publish_date"), SQLDataType.LOCALDATE.nullable(false), this, "")
+    val PUBLISH_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("publish_date"), SQLDataType.LOCALDATETIME(6), this, "")
 
     /**
-     * The column <code>public.book.purchase_date</code>.
+     * The column <code>public.book.avilable_days</code>.
      */
-    val PURCHASE_DATE: TableField<Record, LocalDate?> = createField(DSL.name("purchase_date"), SQLDataType.LOCALDATE.nullable(false), this, "")
-
-    /**
-     * The column <code>public.book.available_days</code>.
-     */
-    val AVAILABLE_DAYS: TableField<Record, Int?> = createField(DSL.name("available_days"), SQLDataType.INTEGER.defaultValue(DSL.field("14", SQLDataType.INTEGER)), this, "")
-
-    /**
-     * The column <code>public.book.author</code>.
-     */
-    val AUTHOR: TableField<Record, String?> = createField(DSL.name("author"), SQLDataType.VARCHAR, this, "")
+    val AVILABLE_DAYS: TableField<Record, Int?> = createField(DSL.name("avilable_days"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field("14", SQLDataType.INTEGER)), this, "")
 
     /**
      * The column <code>public.book.status</code>.
@@ -96,6 +86,16 @@ open class Book(
      * The column <code>public.book.available_rank</code>.
      */
     val AVAILABLE_RANK: TableField<Record, String?> = createField(DSL.name("available_rank"), SQLDataType.VARCHAR.nullable(false), this, "")
+
+    /**
+     * The column <code>public.book.author</code>.
+     */
+    val AUTHOR: TableField<Record, String?> = createField(DSL.name("author"), SQLDataType.VARCHAR, this, "")
+
+    /**
+     * The column <code>public.book.purchase_date</code>.
+     */
+    val PURCHASE_DATE: TableField<Record, LocalDateTime?> = createField(DSL.name("purchase_date"), SQLDataType.LOCALDATETIME(6), this, "")
 
     private constructor(alias: Name, aliased: Table<Record>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<Record>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
